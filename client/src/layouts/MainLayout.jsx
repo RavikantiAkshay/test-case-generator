@@ -14,116 +14,75 @@ const MainLayout = () => {
   };
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--color-bg)', transition: 'background var(--transition-base)' }}>
-      {/* Top Navigation */}
-      <nav
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '0.75rem 2rem',
-          background: isDarkMode ? 'rgba(10, 10, 15, 0.85)' : 'rgba(255, 255, 255, 0.85)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid var(--color-border)',
-        }}
-      >
-        {/* Logo */}
-        <Link
-          to="/dashboard"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            textDecoration: 'none',
-            color: 'var(--color-text)',
-            fontWeight: 700,
-            fontSize: '1.15rem',
-          }}
-        >
-          <HiOutlineBeaker style={{ fontSize: '1.35rem', color: 'var(--color-primary)' }} />
-          <span>TestGen<span style={{ color: 'var(--color-primary)' }}>AI</span></span>
+    <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
+      {/* Nav */}
+      <nav style={{
+        position: 'sticky', top: 0, zIndex: 50,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '0 2rem', height: '56px',
+        background: 'var(--color-bg)',
+        borderBottom: '1px solid var(--color-border)',
+      }}>
+        <Link to="/dashboard" style={{
+          display: 'flex', alignItems: 'center', gap: '0.4rem',
+          textDecoration: 'none', color: 'var(--color-text)',
+          fontWeight: 700, fontSize: '0.95rem', letterSpacing: '-0.02em',
+        }}>
+          <HiOutlineBeaker style={{ fontSize: '1.2rem' }} />
+          <span>TestGenAI</span>
         </Link>
 
-        {/* Right Actions */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          {/* Theme Toggle */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <button
             onClick={toggleDarkMode}
+            aria-label="Toggle theme"
             style={{
-              background: 'none',
-              border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-md)',
-              padding: '0.45rem',
-              cursor: 'pointer',
-              color: 'var(--color-text)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'all var(--transition-fast)',
+              background: 'none', border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)', padding: '6px',
+              cursor: 'pointer', color: 'var(--color-text)', display: 'flex',
             }}
-            aria-label="Toggle dark mode"
           >
-            {isDarkMode ? <HiOutlineSun size={18} /> : <HiOutlineMoon size={18} />}
+            {isDarkMode ? <HiOutlineSun size={16} /> : <HiOutlineMoon size={16} />}
           </button>
 
-          {/* User Badge */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.35rem 0.75rem',
-              borderRadius: 'var(--radius-lg)',
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              fontSize: '0.875rem',
-              color: 'var(--color-text)',
-            }}
-          >
-            <div
-              style={{
-                width: '28px',
-                height: '28px',
-                borderRadius: '50%',
-                background: 'var(--gradient-primary)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                fontWeight: 700,
-                fontSize: '0.75rem',
-              }}
-            >
+          {/* User */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '0.4rem',
+            padding: '4px 10px',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--color-border)',
+            fontSize: '0.83rem', fontWeight: 500,
+          }}>
+            <div style={{
+              width: '22px', height: '22px', borderRadius: '50%',
+              background: 'var(--color-accent)', color: 'var(--color-accent-text)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '0.7rem', fontWeight: 700,
+            }}>
               {user?.name?.charAt(0)?.toUpperCase() || 'U'}
             </div>
-            <span style={{ fontWeight: 500 }}>{user?.name || 'User'}</span>
+            {user?.name || 'User'}
           </div>
 
-          {/* Logout */}
           <button
             onClick={handleLogout}
+            title="Log out"
             style={{
-              background: 'none',
-              border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-md)',
-              padding: '0.45rem',
-              cursor: 'pointer',
-              color: 'var(--color-error)',
-              display: 'flex',
-              alignItems: 'center',
-              transition: 'all var(--transition-fast)',
+              background: 'none', border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)', padding: '6px',
+              cursor: 'pointer', color: 'var(--color-danger)', display: 'flex',
+              transition: 'border-color var(--transition)',
             }}
-            title="Logout"
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-border-strong)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
           >
-            <HiOutlineArrowRightOnRectangle size={18} />
+            <HiOutlineArrowRightOnRectangle size={16} />
           </button>
         </div>
       </nav>
 
-      {/* Page Content */}
-      <main style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
+      {/* Content */}
+      <main style={{ padding: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
         <Outlet />
       </main>
     </div>

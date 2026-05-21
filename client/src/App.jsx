@@ -15,21 +15,18 @@ function App() {
   return (
     <BrowserRouter>
       <Toaster
-        position="top-right"
+        position="top-center"
         toastOptions={{
-          duration: 3000,
+          duration: 2500,
           style: {
             background: 'var(--color-surface)',
             color: 'var(--color-text)',
             border: '1px solid var(--color-border)',
             borderRadius: 'var(--radius-md)',
-            fontSize: '0.9rem',
-          },
-          success: {
-            iconTheme: { primary: '#10b981', secondary: '#fff' },
-          },
-          error: {
-            iconTheme: { primary: '#ef4444', secondary: '#fff' },
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            padding: '10px 14px',
+            boxShadow: 'none',
           },
         }}
       />

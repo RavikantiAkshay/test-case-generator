@@ -1,17 +1,15 @@
 import { Link } from 'react-router-dom';
 import {
   HiOutlineBeaker,
-  HiOutlineBolt,
   HiOutlineCpuChip,
   HiOutlineCodeBracket,
   HiOutlineChatBubbleLeftRight,
   HiOutlineDocumentArrowDown,
   HiOutlineCircleStack,
+  HiOutlineShieldCheck,
   HiOutlineMoon,
   HiOutlineSun,
   HiOutlineArrowRight,
-  HiOutlineSparkles,
-  HiOutlineShieldCheck,
 } from 'react-icons/hi2';
 import useUIStore from '../store/uiStore';
 import useAuthStore from '../store/authStore';
@@ -20,38 +18,32 @@ const features = [
   {
     icon: HiOutlineCpuChip,
     title: 'AI-Powered Generation',
-    description: 'Generate unit tests, integration tests, API tests, edge-case tests, and more using advanced AI models.',
-    color: '#6366f1',
+    description: 'Generate unit, integration, API, and edge-case tests using advanced AI models.',
   },
   {
     icon: HiOutlineCodeBracket,
     title: 'Repository Analysis',
-    description: 'Upload a ZIP or connect GitHub. We detect frameworks, routes, models, and architecture automatically.',
-    color: '#06b6d4',
+    description: 'Upload a ZIP or connect GitHub. We detect frameworks, routes, and architecture.',
   },
   {
     icon: HiOutlineChatBubbleLeftRight,
     title: 'AI Chat Assistant',
-    description: 'Ask follow-up questions: explain tests, generate edge cases, improve assertions, identify gaps.',
-    color: '#8b5cf6',
+    description: 'Ask follow-up questions, generate edge cases, and improve assertions.',
   },
   {
     icon: HiOutlineDocumentArrowDown,
     title: 'Export Anywhere',
-    description: 'Export generated test cases as Markdown, PDF, or JSON. One-click copy to clipboard.',
-    color: '#10b981',
+    description: 'Export test cases as Markdown, PDF, or JSON. One-click copy to clipboard.',
   },
   {
     icon: HiOutlineCircleStack,
     title: 'Memory & Embeddings',
-    description: 'Historical generations improve future outputs through semantic retrieval and context injection.',
-    color: '#f59e0b',
+    description: 'Historical generations improve future outputs through semantic retrieval.',
   },
   {
     icon: HiOutlineShieldCheck,
     title: 'Feedback Loop',
-    description: 'Approve, reject, rate, and regenerate. Your feedback continuously refines AI output quality.',
-    color: '#ef4444',
+    description: 'Approve, reject, rate, and regenerate. Your feedback refines AI output.',
   },
 ];
 
@@ -60,93 +52,64 @@ const LandingPage = () => {
   const { isAuthenticated } = useAuthStore();
 
   return (
-    <div style={{ minHeight: '100vh', overflow: 'hidden' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+
       {/* ─── Navbar ─── */}
-      <nav
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1rem 2rem',
-          background: isDarkMode ? 'rgba(10, 10, 15, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-          backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid var(--color-border)',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <HiOutlineBeaker style={{ fontSize: '1.5rem', color: 'var(--color-primary)' }} />
-          <span style={{ fontWeight: 800, fontSize: '1.25rem', color: 'var(--color-text)' }}>
-            TestGen<span style={{ color: 'var(--color-primary)' }}>AI</span>
+      <nav style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        padding: '0 2rem',
+        height: '56px',
+        background: 'var(--color-bg)',
+        borderBottom: '1px solid var(--color-border)',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <HiOutlineBeaker style={{ fontSize: '1.2rem' }} />
+          <span style={{ fontWeight: 700, fontSize: '0.95rem', letterSpacing: '-0.02em' }}>
+            TestGenAI
           </span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <button
             onClick={toggleDarkMode}
+            aria-label="Toggle theme"
             style={{
-              background: 'none',
-              border: '1px solid var(--color-border)',
-              borderRadius: 'var(--radius-md)',
-              padding: '0.5rem',
-              cursor: 'pointer',
-              color: 'var(--color-text)',
-              display: 'flex',
-              alignItems: 'center',
+              background: 'none', border: '1px solid var(--color-border)',
+              borderRadius: 'var(--radius-md)', padding: '6px',
+              cursor: 'pointer', color: 'var(--color-text)', display: 'flex',
+              transition: 'border-color var(--transition)',
             }}
-            aria-label="Toggle dark mode"
+            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-border-strong)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
           >
-            {isDarkMode ? <HiOutlineSun size={18} /> : <HiOutlineMoon size={18} />}
+            {isDarkMode ? <HiOutlineSun size={16} /> : <HiOutlineMoon size={16} />}
           </button>
           {isAuthenticated ? (
-            <Link
-              to="/dashboard"
-              style={{
-                padding: '0.55rem 1.25rem',
-                background: 'var(--gradient-primary)',
-                color: '#fff',
-                borderRadius: 'var(--radius-md)',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-              }}
-            >
-              Dashboard <HiOutlineArrowRight size={16} />
+            <Link to="/dashboard" style={{
+              padding: '6px 14px', background: 'var(--color-accent)', color: 'var(--color-accent-text)',
+              borderRadius: 'var(--radius-md)', fontWeight: 500, fontSize: '0.85rem',
+              display: 'flex', alignItems: 'center', gap: '4px',
+              transition: 'background var(--transition)',
+            }}>
+              Dashboard <HiOutlineArrowRight size={14} />
             </Link>
           ) : (
             <>
-              <Link
-                to="/login"
-                style={{
-                  padding: '0.55rem 1.25rem',
-                  color: 'var(--color-text)',
-                  fontWeight: 500,
-                  fontSize: '0.9rem',
-                  textDecoration: 'none',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--color-border)',
-                }}
+              <Link to="/login" style={{
+                padding: '6px 14px', fontSize: '0.85rem', fontWeight: 500,
+                color: 'var(--color-text-secondary)',
+                transition: 'color var(--transition)',
+              }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--color-text)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--color-text-secondary)'}
               >
-                Log In
+                Log in
               </Link>
-              <Link
-                to="/signup"
-                style={{
-                  padding: '0.55rem 1.25rem',
-                  background: 'var(--gradient-primary)',
-                  color: '#fff',
-                  borderRadius: 'var(--radius-md)',
-                  fontWeight: 600,
-                  fontSize: '0.9rem',
-                  textDecoration: 'none',
-                }}
-              >
+              <Link to="/signup" style={{
+                padding: '6px 14px', background: 'var(--color-accent)', color: 'var(--color-accent-text)',
+                borderRadius: 'var(--radius-md)', fontWeight: 500, fontSize: '0.85rem',
+                transition: 'background var(--transition)',
+              }}>
                 Get Started
               </Link>
             </>
@@ -154,336 +117,179 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* ─── Hero Section ─── */}
-      <section
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '6rem 2rem 4rem',
-          background: isDarkMode
-            ? 'linear-gradient(135deg, #0a0a0f 0%, #1a1033 40%, #0d1520 70%, #0a0a0f 100%)'
-            : 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 40%, #ecfeff 70%, #f8fafc 100%)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Background orbs */}
-        <div
-          style={{
-            position: 'absolute',
-            width: '500px',
-            height: '500px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)',
-            top: '-100px',
-            right: '-100px',
-            filter: 'blur(60px)',
-            pointerEvents: 'none',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            width: '400px',
-            height: '400px',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%)',
-            bottom: '-50px',
-            left: '-50px',
-            filter: 'blur(60px)',
-            pointerEvents: 'none',
-          }}
-        />
-
-        <div
-          className="animate-fade-in-up"
-          style={{ textAlign: 'center', maxWidth: '800px', position: 'relative', zIndex: 1 }}
-        >
-          {/* Badge */}
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              padding: '0.35rem 1rem',
-              borderRadius: '999px',
-              background: isDarkMode ? 'rgba(99, 102, 241, 0.15)' : 'rgba(99, 102, 241, 0.1)',
-              border: '1px solid rgba(99, 102, 241, 0.3)',
-              color: 'var(--color-primary)',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              marginBottom: '1.5rem',
-            }}
-          >
-            <HiOutlineSparkles size={16} />
-            AI-Powered Test Case Generation
+      {/* ─── Hero ─── */}
+      <section style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        textAlign: 'center',
+        paddingTop: '160px', paddingBottom: '100px',
+        paddingLeft: '1.5rem', paddingRight: '1.5rem',
+      }}>
+        <div className="animate-in" style={{ maxWidth: '620px' }}>
+          {/* Pill */}
+          <div style={{
+            display: 'inline-block',
+            padding: '4px 12px',
+            borderRadius: '999px',
+            border: '1px solid var(--color-border)',
+            fontSize: '0.78rem',
+            fontWeight: 500,
+            color: 'var(--color-text-secondary)',
+            marginBottom: '1.5rem',
+            letterSpacing: '0.02em',
+          }}>
+            AI-Powered Test Generation
           </div>
 
-          {/* Heading */}
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: 800,
-              lineHeight: 1.1,
-              marginBottom: '1.25rem',
-              color: 'var(--color-text)',
-            }}
-          >
-            Generate Intelligent{' '}
-            <span className="gradient-text">Test Cases</span>
-            {' '}for Your Codebase
+          <h1 style={{
+            fontSize: 'clamp(2rem, 5vw, 3.25rem)',
+            fontWeight: 800,
+            lineHeight: 1.08,
+            letterSpacing: '-0.035em',
+            marginBottom: '1.25rem',
+          }}>
+            Generate intelligent test cases for your codebase
           </h1>
 
-          {/* Subtitle */}
-          <p
-            style={{
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              color: 'var(--color-text-secondary)',
-              maxWidth: '600px',
-              margin: '0 auto 2.5rem',
-              lineHeight: 1.7,
-            }}
-          >
-            Upload your repository, let AI analyze your architecture, and generate 
-            comprehensive test suites — unit tests, integration tests, API tests, and edge cases. 
-            All in one platform.
+          <p style={{
+            fontSize: '1.05rem',
+            color: 'var(--color-text-secondary)',
+            lineHeight: 1.65,
+            maxWidth: '480px',
+            margin: '0 auto 2rem',
+          }}>
+            Upload your repository, let AI analyze your architecture, and get comprehensive test suites — unit, integration, API, and edge cases.
           </p>
 
-          {/* CTA Buttons */}
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
             <Link
               to={isAuthenticated ? '/dashboard' : '/signup'}
               style={{
-                padding: '0.85rem 2rem',
-                background: 'var(--gradient-primary)',
-                color: '#fff',
-                borderRadius: 'var(--radius-lg)',
-                fontWeight: 700,
-                fontSize: '1.05rem',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                boxShadow: '0 4px 15px rgba(99, 102, 241, 0.4)',
-                transition: 'transform var(--transition-fast), box-shadow var(--transition-fast)',
+                padding: '10px 22px',
+                background: 'var(--color-accent)',
+                color: 'var(--color-accent-text)',
+                borderRadius: 'var(--radius-md)',
+                fontWeight: 600,
+                fontSize: '0.9rem',
+                display: 'flex', alignItems: 'center', gap: '6px',
+                transition: 'background var(--transition)',
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(99, 102, 241, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(99, 102, 241, 0.4)';
-              }}
+              onMouseEnter={e => e.currentTarget.style.background = 'var(--color-accent-hover)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'var(--color-accent)'}
             >
-              <HiOutlineBolt size={20} />
-              Start Generating Tests
+              Start Generating <HiOutlineArrowRight size={16} />
             </Link>
             <a
               href="https://github.com/RavikantiAkshay/test-case-generator"
-              target="_blank"
-              rel="noopener noreferrer"
+              target="_blank" rel="noopener noreferrer"
               style={{
-                padding: '0.85rem 2rem',
-                background: 'transparent',
-                color: 'var(--color-text)',
+                padding: '10px 22px',
                 border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-lg)',
-                fontWeight: 600,
-                fontSize: '1.05rem',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                transition: 'all var(--transition-fast)',
+                borderRadius: 'var(--radius-md)',
+                fontWeight: 500,
+                fontSize: '0.9rem',
+                color: 'var(--color-text)',
+                transition: 'border-color var(--transition)',
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-primary)';
-                e.currentTarget.style.color = 'var(--color-primary)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-border)';
-                e.currentTarget.style.color = 'var(--color-text)';
-              }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--color-border-strong)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--color-border)'}
             >
-              View on GitHub
+              GitHub
             </a>
           </div>
         </div>
       </section>
 
-      {/* ─── Features Section ─── */}
-      <section
-        style={{
-          padding: '5rem 2rem',
-          background: 'var(--color-bg)',
-        }}
-      >
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2
-              style={{
-                fontSize: 'clamp(1.75rem, 3vw, 2.5rem)',
-                fontWeight: 800,
-                marginBottom: '0.75rem',
-                color: 'var(--color-text)',
-              }}
-            >
-              Everything You Need for{' '}
-              <span className="gradient-text">AI Testing</span>
-            </h2>
-            <p
-              style={{
-                fontSize: '1.1rem',
-                color: 'var(--color-text-secondary)',
-                maxWidth: '600px',
-                margin: '0 auto',
-              }}
-            >
-              A complete platform to analyze, generate, iterate, and export test cases using AI.
-            </p>
-          </div>
+      {/* ─── Divider ─── */}
+      <div style={{ width: '100%', height: '1px', background: 'var(--color-border)' }} />
 
-          {/* Feature Grid */}
-          <div
-            className="stagger-children"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '1.5rem',
+      {/* ─── Features ─── */}
+      <section style={{ padding: '5rem 2rem', maxWidth: '960px', margin: '0 auto', width: '100%' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <h2 style={{
+            fontSize: '1.6rem', fontWeight: 700, letterSpacing: '-0.025em', marginBottom: '0.5rem',
+          }}>
+            Everything you need
+          </h2>
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.95rem' }}>
+            A complete platform to generate, iterate, and export AI-powered test cases.
+          </p>
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1px',
+          background: 'var(--color-border)',
+          border: '1px solid var(--color-border)',
+          borderRadius: 'var(--radius-lg)',
+          overflow: 'hidden',
+        }}>
+          {features.map((feature, i) => (
+            <div key={i} style={{
+              padding: '1.75rem',
+              background: 'var(--color-bg)',
+              transition: 'background var(--transition)',
             }}
-          >
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                style={{
-                  background: 'var(--color-surface)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '2rem',
-                  transition: 'all var(--transition-base)',
-                  cursor: 'default',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = feature.color;
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = `0 8px 30px ${feature.color}20`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-border)';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div
-                  style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: 'var(--radius-lg)',
-                    background: `${feature.color}18`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '1rem',
-                  }}
-                >
-                  <feature.icon size={24} style={{ color: feature.color }} />
-                </div>
-                <h3
-                  style={{
-                    fontSize: '1.15rem',
-                    fontWeight: 700,
-                    marginBottom: '0.5rem',
-                    color: 'var(--color-text)',
-                  }}
-                >
-                  {feature.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: '0.95rem',
-                    color: 'var(--color-text-secondary)',
-                    lineHeight: 1.6,
-                  }}
-                >
-                  {feature.description}
-                </p>
-              </div>
-            ))}
-          </div>
+              onMouseEnter={e => e.currentTarget.style.background = 'var(--color-bg-subtle)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'var(--color-bg)'}
+            >
+              <feature.icon size={20} style={{ color: 'var(--color-text-muted)', marginBottom: '0.75rem' }} />
+              <h3 style={{ fontSize: '0.92rem', fontWeight: 600, marginBottom: '0.35rem', letterSpacing: '-0.01em' }}>
+                {feature.title}
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.55 }}>
+                {feature.description}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ─── CTA Section ─── */}
-      <section
-        style={{
-          padding: '5rem 2rem',
-          background: isDarkMode
-            ? 'linear-gradient(135deg, #1a1033 0%, #0a0a0f 100%)'
-            : 'linear-gradient(135deg, #eef2ff 0%, #f8fafc 100%)',
-          textAlign: 'center',
-        }}
-      >
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2
-            style={{
-              fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
-              fontWeight: 800,
-              marginBottom: '1rem',
-              color: 'var(--color-text)',
-            }}
-          >
-            Ready to Supercharge Your Testing?
-          </h2>
-          <p
-            style={{
-              fontSize: '1.05rem',
-              color: 'var(--color-text-secondary)',
-              marginBottom: '2rem',
-            }}
-          >
-            Join developers who are using AI to generate better test cases, faster.
-          </p>
-          <Link
-            to={isAuthenticated ? '/dashboard' : '/signup'}
-            style={{
-              padding: '0.85rem 2.5rem',
-              background: 'var(--gradient-primary)',
-              color: '#fff',
-              borderRadius: 'var(--radius-lg)',
-              fontWeight: 700,
-              fontSize: '1.1rem',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              boxShadow: '0 4px 15px rgba(99, 102, 241, 0.4)',
-            }}
-          >
-            Get Started Free <HiOutlineArrowRight size={18} />
-          </Link>
-        </div>
+      {/* ─── CTA ─── */}
+      <section style={{
+        padding: '4rem 2rem',
+        textAlign: 'center',
+        borderTop: '1px solid var(--color-border)',
+      }}>
+        <h2 style={{
+          fontSize: '1.35rem', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: '0.5rem',
+        }}>
+          Ready to start?
+        </h2>
+        <p style={{
+          color: 'var(--color-text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem',
+        }}>
+          Create an account and generate your first test suite in minutes.
+        </p>
+        <Link
+          to={isAuthenticated ? '/dashboard' : '/signup'}
+          style={{
+            padding: '10px 24px',
+            background: 'var(--color-accent)',
+            color: 'var(--color-accent-text)',
+            borderRadius: 'var(--radius-md)',
+            fontWeight: 600,
+            fontSize: '0.9rem',
+            display: 'inline-flex', alignItems: 'center', gap: '6px',
+            transition: 'background var(--transition)',
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = 'var(--color-accent-hover)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'var(--color-accent)'}
+        >
+          Get Started Free <HiOutlineArrowRight size={16} />
+        </Link>
       </section>
 
       {/* ─── Footer ─── */}
-      <footer
-        style={{
-          padding: '2rem',
-          textAlign: 'center',
-          borderTop: '1px solid var(--color-border)',
-          background: 'var(--color-surface)',
-          color: 'var(--color-text-muted)',
-          fontSize: '0.85rem',
-        }}
-      >
-        <p>
-          © {new Date().getFullYear()} TestGenAI — Built with{' '}
-          <span style={{ color: 'var(--color-primary)' }}>React</span>,{' '}
-          <span style={{ color: 'var(--color-primary)' }}>Node.js</span>, and{' '}
-          <span style={{ color: 'var(--color-primary)' }}>Groq AI</span>
-        </p>
+      <footer style={{
+        marginTop: 'auto',
+        padding: '1.5rem 2rem',
+        textAlign: 'center',
+        borderTop: '1px solid var(--color-border)',
+        fontSize: '0.8rem',
+        color: 'var(--color-text-muted)',
+      }}>
+        © {new Date().getFullYear()} TestGenAI
       </footer>
     </div>
   );
