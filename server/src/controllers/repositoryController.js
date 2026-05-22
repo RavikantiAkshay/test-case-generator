@@ -1,81 +1,120 @@
 const repositoryService = require('../services/repositoryService');
 const projectService = require('../services/projectService');
+const { analyzeRepository } = require('../services/analysisService');
 const { createResponse } = require('../utils/helpers');
 const logger = require('../utils/logger');
 
 /**
+ * Run analysis on a project's repository and persist results
+ */
+const runAnalysis = async (repoPath, projectId, userId) => {
+  await projectService.updateProject(projectId, userId, { status: 'analyzing' });
+
+  const analysis = analyzeRepository(repoPath);
+
+  const updated = await projectService.updateProject(projectId, userId, {
+    repositorySummary: analysis.repositorySummary,
+    detectedTechnologies: analysis.detectedTechnologies,
+    analysisResults: {
+      routes: analysis.routes,
+      models: analysis.models,
+    },
+    status: 'ready',
+  });
+
+  return { project: updated, analysis };
+};
+
+/**
  * POST /api/repositories/upload
- * Upload a ZIP file for a project
  */
 const uploadZip = async (req, res) => {
   if (!req.file) {
-    return res.status(400).json({
-      success: false,
-      message: 'No ZIP file provided',
-    });
+    return res.status(400).json({ success: false, message: 'No ZIP file provided' });
   }
 
   const { projectId } = req.body;
   if (!projectId) {
-    return res.status(400).json({
-      success: false,
-      message: 'Project ID is required',
-    });
+    return res.status(400).json({ success: false, message: 'Project ID is required' });
   }
 
-  // Verify project ownership
   const project = await projectService.getProjectById(projectId, req.user.id);
-
-  // Update status
   await projectService.updateProject(projectId, req.user.id, { status: 'uploading' });
 
-  // Extract ZIP
   const repoPath = await repositoryService.extractZip(req.file.path, projectId);
 
-  // Update project with repo path
-  const updated = await projectService.updateProject(projectId, req.user.id, {
+  const { project: updated, analysis } = await runAnalysis(repoPath, projectId, req.user.id);
+  await projectService.updateProject(projectId, req.user.id, {
     repositoryPath: repoPath,
     sourceType: 'zip',
-    status: 'ready',
   });
 
-  logger.success(`ZIP uploaded for project: ${project.projectName}`);
-  res.status(200).json(createResponse(true, 'Repository uploaded', updated));
+  logger.success(`ZIP uploaded & analyzed for project: ${project.projectName}`);
+  res.status(200).json(createResponse(true, 'Repository uploaded and analyzed', {
+    project: updated,
+    analysis: {
+      routes: analysis.routes,
+      models: analysis.models,
+      technologies: analysis.repositorySummary?.languages || [],
+    },
+  }));
 };
 
 /**
  * POST /api/repositories/github
- * Import a GitHub repository for a project
  */
 const importGithub = async (req, res) => {
   const { projectId, repositoryUrl } = req.body;
 
   if (!projectId || !repositoryUrl) {
-    return res.status(400).json({
-      success: false,
-      message: 'Project ID and repository URL are required',
-    });
+    return res.status(400).json({ success: false, message: 'Project ID and repository URL are required' });
   }
 
-  // Verify project ownership
   const project = await projectService.getProjectById(projectId, req.user.id);
-
-  // Update status
   await projectService.updateProject(projectId, req.user.id, { status: 'uploading' });
 
-  // Clone repo
   const repoPath = await repositoryService.cloneGithubRepo(repositoryUrl, projectId);
 
-  // Update project
-  const updated = await projectService.updateProject(projectId, req.user.id, {
+  const { project: updated, analysis } = await runAnalysis(repoPath, projectId, req.user.id);
+  await projectService.updateProject(projectId, req.user.id, {
     repositoryPath: repoPath,
     repositoryUrl,
     sourceType: 'github',
-    status: 'ready',
   });
 
-  logger.success(`GitHub repo imported for project: ${project.projectName}`);
-  res.status(200).json(createResponse(true, 'Repository imported', updated));
+  logger.success(`GitHub repo imported & analyzed for project: ${project.projectName}`);
+  res.status(200).json(createResponse(true, 'Repository imported and analyzed', {
+    project: updated,
+    analysis: {
+      routes: analysis.routes,
+      models: analysis.models,
+      technologies: analysis.repositorySummary?.languages || [],
+    },
+  }));
 };
 
-module.exports = { uploadZip, importGithub };
+/**
+ * POST /api/repositories/analyze/:projectId
+ * Re-run analysis on an existing project's repository
+ */
+const analyzeProject = async (req, res) => {
+  const { projectId } = req.params;
+  const project = await projectService.getProjectById(projectId, req.user.id);
+
+  if (!project.repositoryPath) {
+    return res.status(400).json({ success: false, message: 'No repository attached to this project' });
+  }
+
+  const { project: updated, analysis } = await runAnalysis(project.repositoryPath, projectId, req.user.id);
+
+  logger.success(`Re-analysis complete for project: ${project.projectName}`);
+  res.status(200).json(createResponse(true, 'Analysis complete', {
+    project: updated,
+    analysis: {
+      routes: analysis.routes,
+      models: analysis.models,
+    },
+  }));
+};
+
+module.exports = { uploadZip, importGithub, analyzeProject };

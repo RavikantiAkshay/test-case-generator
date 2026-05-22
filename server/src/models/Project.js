@@ -48,6 +48,22 @@ const projectSchema = new mongoose.Schema(
       enum: ['zip', 'github', 'none'],
       default: 'none',
     },
+    analysisResults: {
+      routes: [
+        {
+          method: { type: String },
+          path: { type: String },
+          file: { type: String },
+        },
+      ],
+      models: [
+        {
+          name: { type: String },
+          file: { type: String },
+          fields: [{ type: String }],
+        },
+      ],
+    },
     status: {
       type: String,
       enum: ['created', 'uploading', 'analyzing', 'ready', 'error'],

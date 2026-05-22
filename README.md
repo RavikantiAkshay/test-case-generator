@@ -107,6 +107,7 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 |--------|----------------------------|------|-------------------------|
 | POST   | `/api/repositories/upload` | Yes  | Upload ZIP repository   |
 | POST   | `/api/repositories/github` | Yes  | Import GitHub repository|
+| POST   | `/api/repositories/analyze/:projectId` | Yes | Re-run repository analysis |
 
 ## Features
 
@@ -119,6 +120,10 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 - Project detail page with repository upload/import UI
 - Monochrome UI with dark mode (system preference detection)
 - Reusable component library: Button, Input, Modal, Skeleton, ProjectCard
+- Repository analysis engine: detects frameworks, databases, tools, and testing libraries
+- Route detector: parses Express and NestJS routing decorators/methods
+- Model detector: parses Mongoose schema definitions and extracts collection fields
+- File tree scanner: generates directory structures and counts files/directories
 
 ## License
 

@@ -94,22 +94,22 @@
 ## Phase 3 — Repository Analysis
 
 ### 3A · Parsing Engine
-- [ ] Create `src/parsing/fileScanner.js` — recursively walk directory, ignore `node_modules`/`.git`, return file tree
-- [ ] Create `src/parsing/techDetector.js` — detect React, Express, MongoDB, TypeScript via `package.json` + extensions
-- [ ] Create `src/parsing/routeDetector.js` — parse Express files for `router.get/post/put/delete` patterns
-- [ ] Create `src/parsing/modelDetector.js` — parse Mongoose `Schema` definitions for collection names + fields
+- [x] Create `src/parsing/fileScanner.js` — recursively walk directory, ignore `node_modules`/`.git`, return file tree
+- [x] Create `src/parsing/techDetector.js` — detect React, Express, MongoDB, TypeScript via `package.json` + extensions
+- [x] Create `src/parsing/routeDetector.js` — parse Express files for `router.get/post/put/delete` patterns
+- [x] Create `src/parsing/modelDetector.js` — parse Mongoose `Schema` definitions for collection names + fields
 
 ### 3B · Analysis Pipeline
-- [ ] Add analysis orchestration to `repositoryService.js` — scan → detect → summarize
-- [ ] Store analysis results on the Project document (`repositorySummary`, `detectedTechnologies`)
-- [ ] Generate folder-structure summary as a tree string
+- [x] Add analysis orchestration to `repositoryService.js` — scan → detect → summarize
+- [x] Store analysis results on the Project document (`repositorySummary`, `detectedTechnologies`)
+- [x] Generate folder-structure summary as a tree string
 
 ### 3C · Frontend Analysis View
-- [ ] Create `src/pages/RepoAnalysisPage.jsx` — tabbed view (Technologies, Routes, Models, Structure)
-- [ ] Create `src/components/repo/TechBadge.jsx` — colored badge per technology
-- [ ] Create `src/components/repo/FolderTree.jsx` — collapsible file tree component
-- [ ] Create `src/components/repo/RouteList.jsx` — table of detected API routes
-- [ ] Wire analysis view into project workspace with navigation tabs
+- [x] Create `src/pages/RepoAnalysisPage.jsx` — tabbed view (Technologies, Routes, Models, Structure)
+- [x] Create `src/components/repo/TechBadge.jsx` — colored badge per technology
+- [x] Create `src/components/repo/FolderTree.jsx` — collapsible file tree component
+- [x] Create `src/components/repo/RouteList.jsx` — table of detected API routes
+- [x] Wire analysis view into project workspace with navigation tabs
 
 ### 3D · Phase 3 Verification
 - [ ] ✅ Upload React+Express repo → both frameworks detected
