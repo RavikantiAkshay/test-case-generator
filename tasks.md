@@ -123,36 +123,36 @@
 ## Phase 4 — AI Test Generation
 
 ### 4A · Groq AI Integration
-- [ ] Install `groq-sdk` in server
-- [ ] Create `src/ai/groqClient.js` — initialize Groq SDK, expose `chatCompletion()` method
-- [ ] Create `src/ai/promptBuilder.js` — build structured prompts from goal + code + repo context + instructions
-- [ ] Create `src/ai/contextRetriever.js` — stub returning empty context (Phase 5 fills this)
+- [x] Install `groq-sdk` in server
+- [x] Create `src/ai/groqClient.js` — initialize Groq SDK, expose `chatCompletion()` method
+- [x] Create `src/ai/promptBuilder.js` — build structured prompts from goal + code + repo context + instructions
+- [x] Create `src/ai/contextRetriever.js` — stub returning empty context (Phase 5 fills this)
 
 ### 4B · Generation Backend
-- [ ] Create `src/models/Generation.js` — projectId, generationType, generatedContent, qualityScore, feedback, createdAt
-- [ ] Create `src/validators/generateValidator.js` — validate generation request payload
-- [ ] Create `src/services/generateService.js` — orchestrate: prompt → Groq → parse → save
-- [ ] Create `src/controllers/generateController.js` — generate and regenerate handlers
-- [ ] Create `src/routes/generateRoutes.js` — POST `/tests`, POST `/regenerate`
+- [x] Create `src/models/Generation.js` — projectId, generationType, generatedContent, qualityScore, feedback, createdAt
+- [x] Create `src/validators/generateValidator.js` — validate generation request payload
+- [x] Create `src/services/generateService.js` — orchestrate: prompt → Groq → parse → save
+- [x] Create `src/controllers/generateController.js` — generate and regenerate handlers
+- [x] Create `src/routes/generateRoutes.js` — POST `/tests`, POST `/regenerate`
 
 ### 4C · Frontend Generation UI
-- [ ] Create `src/components/project/GenerationForm.jsx` — goal input, code textarea, instruction options, type checkboxes
-- [ ] Create `src/components/project/TestCard.jsx` — syntax-highlighted output, edit/regenerate/feedback buttons
-- [ ] Create `src/api/generateApi.js` — generate and regenerate API calls
-- [ ] Create `src/pages/ProjectPage.jsx` — full workspace: repo overview, generation form, results, chat, exports
-- [ ] Add loading states and skeleton loaders during AI processing
+- [x] Create `src/components/project/GenerationForm.jsx` — goal input, code textarea, instruction options, type checkboxes
+- [x] Create `src/components/project/TestCard.jsx` — syntax-highlighted output, edit/regenerate/feedback buttons
+- [x] Create `src/api/generateApi.js` — generate and regenerate API calls
+- [x] Create `src/pages/ProjectPage.jsx` — full workspace: repo overview, generation form, results, chat, exports
+- [x] Add loading states and skeleton loaders during AI processing
 
 ### 4D · Feedback System
-- [ ] Add feedback controls to TestCard — approve 👍, reject 👎, star rating 1–5
-- [ ] Create backend endpoint to update Generation feedback field
-- [ ] Store feedback for future prompt optimization
+- [x] Add feedback controls to TestCard — approve 👍, reject 👎, star rating 1–5
+- [x] Create backend endpoint to update Generation feedback field
+- [x] Store feedback for future prompt optimization
 
 ### 4E · Phase 4 Verification
-- [ ] ✅ Submit generation form → Groq returns test cases → rendered with syntax highlighting
-- [ ] ✅ Regenerate produces new output for the same input
-- [ ] ✅ Generated content is editable inline
-- [ ] ✅ Feedback saves to database
-- [ ] ✅ Loading skeleton appears during AI processing
+- [x] ✅ Submit generation form → Groq returns test cases → rendered with syntax highlighting
+- [x] ✅ Regenerate produces new output for the same input
+- [x] ✅ Generated content is editable inline
+- [x] ✅ Feedback saves to database
+- [x] ✅ Loading skeleton appears during AI processing
 
 ---
 

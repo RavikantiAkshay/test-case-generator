@@ -19,6 +19,9 @@ import TechBadge from '../components/repo/TechBadge';
 import FolderTree from '../components/repo/FolderTree';
 import RouteList from '../components/repo/RouteList';
 import ModelList from '../components/repo/ModelList';
+import GenerationForm from '../components/project/GenerationForm';
+import TestCard from '../components/project/TestCard';
+import useGenerateStore from '../store/generateStore';
 import toast from 'react-hot-toast';
 
 const TABS = [
@@ -26,12 +29,14 @@ const TABS = [
   { key: 'routes', label: 'Routes' },
   { key: 'models', label: 'Models' },
   { key: 'structure', label: 'Structure' },
+  { key: 'generation', label: 'AI Generation' },
 ];
 
 const ProjectPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { activeProject, fetchProject, deleteProject, isLoading } = useProjectStore();
+  const { generations, fetchGenerations, generateTest, regenerateTest, updateFeedback, updateContent, isLoading: isGenerating } = useGenerateStore();
 
   const [activeTab, setActiveTab] = useState('overview');
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -47,7 +52,8 @@ const ProjectPage = () => {
       toast.error('Project not found');
       navigate('/dashboard');
     });
-  }, [id, fetchProject, navigate]);
+    fetchGenerations(id).catch(() => {});
+  }, [id, fetchProject, fetchGenerations, navigate]);
 
   const handleZipUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -305,6 +311,35 @@ const ProjectPage = () => {
             {activeTab === 'routes' && <RouteList routes={routes} />}
             {activeTab === 'models' && <ModelList models={models} />}
             {activeTab === 'structure' && <FolderTree treeString={summary.folderStructure} />}
+            {activeTab === 'generation' && (
+              <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+                <div style={{ position: 'sticky', top: '20px' }}>
+                  <GenerationForm
+                    projectId={id}
+                    isGenerating={isGenerating}
+                    onGenerate={generateTest}
+                  />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {generations.length === 0 ? (
+                    <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)', border: '1px dashed var(--color-border)', borderRadius: 'var(--radius-md)' }}>
+                      No tests generated yet. Use the form to generate your first test suite.
+                    </div>
+                  ) : (
+                    generations.map((gen) => (
+                      <TestCard
+                        key={gen._id}
+                        generation={gen}
+                        onRegenerate={regenerateTest}
+                        onUpdateFeedback={updateFeedback}
+                        onUpdateContent={updateContent}
+                        isRegenerating={isGenerating}
+                      />
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </>
       )}

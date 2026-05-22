@@ -109,21 +109,26 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 | POST   | `/api/repositories/github` | Yes  | Import GitHub repository|
 | POST   | `/api/repositories/analyze/:projectId` | Yes | Re-run repository analysis |
 
+### AI Generation
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST   | `/api/generate` | Yes | Generate test cases |
+| POST   | `/api/generate/regenerate` | Yes | Regenerate test cases |
+| PATCH  | `/api/generate/:id/feedback` | Yes | Update generation feedback |
+| PATCH  | `/api/generate/:id/content` | Yes | Inline edit generated content |
+| GET    | `/api/generate/project/:projectId` | Yes | List project generations |
+
 ## Features
 
-- Express server with MongoDB, CORS, centralized error handling
-- JWT authentication (signup, login, protected routes)
-- Project CRUD (create, list, get, update, delete)
-- ZIP repository upload with auto-extraction (50MB limit)
-- GitHub repository import via shallow clone
-- Dashboard with project grid, skeleton loading, and create modal
-- Project detail page with repository upload/import UI
-- Monochrome UI with dark mode (system preference detection)
-- Reusable component library: Button, Input, Modal, Skeleton, ProjectCard
-- Repository analysis engine: detects frameworks, databases, tools, and testing libraries
-- Route detector: parses Express and NestJS routing decorators/methods
-- Model detector: parses Mongoose schema definitions and extracts collection fields
-- File tree scanner: generates directory structures and counts files/directories
+- **Secure Authentication**: JWT-based signup and login flows with hashed passwords.
+- **Project Workspace**: Centralized dashboard to manage multiple codebases with full CRUD capabilities.
+- **Repository Integration**: Import projects seamlessly via GitHub URL or direct ZIP upload (with auto-extraction).
+- **Deep Architecture Analysis**: Automatically scans imported code to detect frameworks, databases, API routes, and database schemas.
+- **Context-Aware AI Generation**: Leverages the Groq API to generate tailored test cases (unit, integration, e2e) based on your repository's specific stack and structure.
+- **Interactive Test Workspace**: View syntax-highlighted test code, edit outputs inline, and request targeted AI regenerations.
+- **Feedback Loop**: Provide approvals or rejections to generations to build context for future prompts.
+- **Premium Monochrome UI**: A meticulously crafted, distraction-free grayscale interface with automatic system dark-mode detection.
 
 ## License
 
