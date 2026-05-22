@@ -35,7 +35,9 @@ app.get('/api/health', (req, res) => {
 
 // --- API Routes ---
 app.use('/api/auth', require('./src/routes/authRoutes'));
-// Phase 2+: project, repository, generate, chat, export routes will be added here
+app.use('/api/projects', require('./src/routes/projectRoutes'));
+app.use('/api/repositories', require('./src/routes/repositoryRoutes'));
+// Phase 3+: generate, chat, export routes will be added here
 
 // --- 404 Handler ---
 app.use((req, res) => {

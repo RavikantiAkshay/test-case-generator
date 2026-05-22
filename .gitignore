@@ -23,8 +23,9 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Uploads (temp files)
+# Uploads & repos (runtime data)
 uploads/
+repos/
 temp/
 
 # Coverage

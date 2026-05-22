@@ -54,33 +54,33 @@
 ## Phase 2 — Dashboard & Project Management
 
 ### 2A · Project Model & CRUD Backend
-- [ ] Create `src/models/Project.js` — userId (ref), projectName, repositoryUrl, repositorySummary, detectedTechnologies, createdAt
-- [ ] Create `src/validators/projectValidator.js` — validate project creation payload
-- [ ] Create `src/services/projectService.js` — create, list (filter by userId), getById
-- [ ] Create `src/controllers/projectController.js` — CRUD handlers
-- [ ] Create `src/routes/projectRoutes.js` — POST `/`, GET `/`, GET `/:id` (all protected)
+- [x] Create `src/models/Project.js` — userId (ref), projectName, repositoryUrl, repositorySummary, detectedTechnologies, createdAt
+- [x] Create `src/validators/projectValidator.js` — validate project creation payload
+- [x] Create `src/services/projectService.js` — create, list (filter by userId), getById
+- [x] Create `src/controllers/projectController.js` — CRUD handlers
+- [x] Create `src/routes/projectRoutes.js` — POST `/`, GET `/`, GET `/:id` (all protected)
 
 ### 2B · Repository Upload & GitHub Import
-- [ ] Create `src/middlewares/uploadMiddleware.js` — Multer config for ZIP, 50 MB limit
-- [ ] Create `src/services/repositoryService.js` — extract ZIP to temp dir, clone GitHub repo
-- [ ] Create `src/controllers/repositoryController.js` — handle upload and GitHub import
-- [ ] Create `src/routes/repositoryRoutes.js` — POST `/upload`, POST `/github`
+- [x] Create `src/middlewares/uploadMiddleware.js` — Multer config for ZIP, 50 MB limit
+- [x] Create `src/services/repositoryService.js` — extract ZIP to temp dir, clone GitHub repo
+- [x] Create `src/controllers/repositoryController.js` — handle upload and GitHub import
+- [x] Create `src/routes/repositoryRoutes.js` — POST `/upload`, POST `/github`
 
 ### 2C · Frontend Dashboard
-- [ ] Create `src/layouts/MainLayout.jsx` — sidebar navigation, top bar, main content area, user menu
-- [ ] Create `src/pages/DashboardPage.jsx` — project grid, stats bar, recent generations
-- [ ] Create `src/components/dashboard/ProjectCard.jsx` — project name, tech icons, updated date, actions
-- [ ] Create `src/components/dashboard/EmptyState.jsx` — illustrated empty state with CTA button
-- [ ] Create `src/components/dashboard/StatsGrid.jsx` — total projects, total generations, recent activity
-- [ ] Create `src/components/common/Button.jsx` — reusable button with variants (primary, secondary, ghost, danger)
-- [ ] Create `src/components/common/Input.jsx` — reusable input with label and error states
-- [ ] Create `src/components/common/Modal.jsx` — reusable modal/dialog component
-- [ ] Create `src/components/common/Skeleton.jsx` — skeleton loader component
+- [x] Create `src/layouts/MainLayout.jsx` — sidebar navigation, top bar, main content area, user menu
+- [x] Create `src/pages/DashboardPage.jsx` — project grid, stats bar, recent generations
+- [x] Create `src/components/dashboard/ProjectCard.jsx` — project name, tech icons, updated date, actions
+- [x] Create `src/components/dashboard/EmptyState.jsx` — illustrated empty state with CTA button
+- [x] Create `src/components/dashboard/StatsGrid.jsx` — total projects, total generations, recent activity
+- [x] Create `src/components/common/Button.jsx` — reusable button with variants (primary, secondary, ghost, danger)
+- [x] Create `src/components/common/Input.jsx` — reusable input with label and error states
+- [x] Create `src/components/common/Modal.jsx` — reusable modal/dialog component
+- [x] Create `src/components/common/Skeleton.jsx` — skeleton loader component
 
 ### 2D · Frontend API & State
-- [ ] Create `src/api/projectApi.js` — createProject, listProjects, getProject
-- [ ] Create `src/api/repositoryApi.js` — uploadZip, importGithub
-- [ ] Create `src/store/projectStore.js` — Zustand: projects list, activeProject, CRUD actions
+- [x] Create `src/api/projectApi.js` — createProject, listProjects, getProject
+- [x] Create `src/api/repositoryApi.js` — uploadZip, importGithub
+- [x] Create `src/store/projectStore.js` — Zustand: projects list, activeProject, CRUD actions
 
 ### 2E · Phase 2 Verification
 - [ ] ✅ Create project via dashboard → appears in project list

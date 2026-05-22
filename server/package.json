@@ -1,7 +1,7 @@
 {
   "name": "testcase-generator-server",
   "version": "1.0.0",
-  "description": "AI-Powered Test Case Generator — Backend API",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,8 +11,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
+    "adm-zip": "^0.5.17",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",

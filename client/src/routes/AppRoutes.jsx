@@ -3,6 +3,7 @@ import LandingPage from '../pages/LandingPage';
 import SignupPage from '../pages/SignupPage';
 import LoginPage from '../pages/LoginPage';
 import DashboardPage from '../pages/DashboardPage';
+import ProjectPage from '../pages/ProjectPage';
 import MainLayout from '../layouts/MainLayout';
 import ProtectedRoute from '../components/auth/ProtectedRoute';
 import useAuthStore from '../store/authStore';
@@ -32,7 +33,7 @@ const AppRoutes = () => {
         }
       >
         <Route path="/dashboard" element={<DashboardPage />} />
-        {/* Phase 2+: /projects/:id, /projects/:id/analysis, etc. */}
+        <Route path="/projects/:id" element={<ProjectPage />} />
       </Route>
 
       {/* Catch-all */}
