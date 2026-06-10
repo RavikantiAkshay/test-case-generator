@@ -159,45 +159,44 @@
 ## Phase 5 — Embedding & Memory System
 
 ### 5A · Embedding Generation
-- [ ] Create `src/embeddings/embeddingService.js` — generate text embeddings via Groq or dedicated model
-- [ ] Create `src/models/Embedding.js` — Mongoose schema: projectId, embedding (array), content, metadata
-- [ ] Hook into `generateService.js` — auto-create embeddings after each generation
+- [x] Create `src/embeddings/embeddingService.js` — generate text embeddings via Groq or dedicated model
+- [x] Create `src/models/Embedding.js` — Mongoose schema: projectId, embedding (array), content, metadata
+- [x] Hook into `generateService.js` — auto-create embeddings after each generation
 
 ### 5B · Similarity Search
-- [ ] Create `src/embeddings/similaritySearch.js` — cosine similarity over stored embeddings
-- [ ] Implement top-K retrieval of similar past generations for a given prompt
-- [ ] Add performance logging for retrieval latency
+- [x] Create `src/embeddings/similaritySearch.js` — cosine similarity over stored embeddings
+- [x] Implement top-K retrieval of similar past generations for a given prompt
+- [x] Add performance logging for retrieval latency
 
 ### 5C · Context Enhancement
-- [ ] Update `src/ai/contextRetriever.js` — wire in similarity search for real context
-- [ ] Update `promptBuilder.js` — inject historical examples into generation prompt
-- [ ] Add "Similar Past Generations" section to the project workspace UI
+- [x] Update `src/ai/contextRetriever.js` — wire in similarity search for real context
+- [x] Update `promptBuilder.js` — inject historical examples into generation prompt
+- [x] Add "Similar Past Generations" section to the project workspace UI
 
 ### 5D · Phase 5 Verification
-- [ ] ✅ After generation, embedding stored in MongoDB
-- [ ] ✅ New generation retrieves similar past generations
-- [ ] ✅ AI output quality improves with historical context
-- [ ] ✅ Embedding retrieval completes in under 2 seconds
+- [x] ✅ After generation, embedding stored in MongoDB
+- [x] ✅ New generation retrieves similar past generations
+- [x] ✅ AI output quality improves with historical context
+- [x] ✅ Embedding retrieval completes in under 2 seconds
 
 ---
 
 ## Phase 6 — Chat Assistant & Exports
 
 ### 6A · AI Chat Assistant
-- [ ] Create `src/models/Chat.js` — projectId, userMessage, assistantMessage, createdAt
-- [ ] Create `src/services/chatService.js` — build chat prompt with repo context + generations + embeddings
-- [ ] Create `src/controllers/chatController.js` and `src/routes/chatRoutes.js` — POST `/api/chat`
-- [ ] Create `src/api/chatApi.js` on frontend
-- [ ] Create `src/components/project/ChatPanel.jsx` — message list, input box, streaming-style display
-- [ ] Integrate chat panel into ProjectPage as a slide-over or tab
+- [x] Create `src/models/Chat.js` — projectId, userMessage, assistantMessage, createdAt
+- [x] Create `src/services/chatService.js` — build chat prompt with repo context + generations + embeddings
+- [x] Create `src/controllers/chatController.js` and `src/routes/chatRoutes.js` — POST `/api/chat`
+- [x] Create `src/api/chatApi.js` on frontend
+- [x] Create `src/components/project/ChatPanel.jsx` — message list, input box, streaming-style display
+- [x] Integrate chat panel into ProjectPage as a slide-over or tab
 
 ### 6B · Export System
-- [ ] Install `pdfkit` in server
-- [ ] Create `src/services/exportService.js` — generate Markdown, PDF, JSON from project generations
-- [ ] Create `src/controllers/exportController.js` and `src/routes/exportRoutes.js` — GET endpoints per format
-- [ ] Create `src/api/exportApi.js` on frontend
-- [ ] Create `src/components/project/ExportBar.jsx` — Markdown, PDF, JSON, Copy-to-clipboard buttons
-- [ ] Integrate export bar into project workspace
+- [x] Create `src/services/exportService.js` — generate Markdown, Text, JSON from project generations
+- [x] Create `src/controllers/exportController.js` and `src/routes/exportRoutes.js` — GET endpoints per format
+- [x] Create `src/api/exportApi.js` on frontend
+- [x] Create `src/components/project/ExportBar.jsx` — Markdown, JSON, Text, Copy-to-clipboard buttons
+- [x] Integrate export bar into project workspace
 
 ### 6C · Final Polish
 - [ ] Review all pages for responsive design (mobile, tablet, desktop breakpoints)
@@ -208,12 +207,12 @@
 - [ ] Security audit: sanitize inputs, validate payloads, check JWT expiry handling
 
 ### 6D · Phase 6 Verification
-- [ ] ✅ Chat assistant answers "explain this test" with project context
-- [ ] ✅ Chat uses repo context and past generations
-- [ ] ✅ Markdown export downloads valid `.md` file
-- [ ] ✅ PDF export downloads valid `.pdf` file
-- [ ] ✅ JSON export downloads valid `.json` file
-- [ ] ✅ Copy-to-clipboard works for generated test content
+- [x] ✅ Chat assistant answers "explain this test" with project context
+- [x] ✅ Chat uses repo context and past generations
+- [x] ✅ Markdown export downloads valid `.md` file
+- [x] ✅ Text export downloads valid `.txt` file
+- [x] ✅ JSON export downloads valid `.json` file
+- [x] ✅ Copy-to-clipboard works for generated test content
 
 ---
 

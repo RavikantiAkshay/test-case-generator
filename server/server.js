@@ -38,7 +38,8 @@ app.use('/api/auth', require('./src/routes/authRoutes'));
 app.use('/api/projects', require('./src/routes/projectRoutes'));
 app.use('/api/repositories', require('./src/routes/repositoryRoutes'));
 app.use('/api/generate', require('./src/routes/generateRoutes'));
-// Phase 4+: chat, export routes will be added here
+app.use('/api/chat', require('./src/routes/chatRoutes'));
+app.use('/api/export', require('./src/routes/exportRoutes'));
 
 // --- 404 Handler ---
 app.use((req, res) => {

@@ -6,10 +6,10 @@ AI-powered test case generator. Upload a repository, let AI analyze the architec
 
 | Layer    | Technology                            |
 |----------|---------------------------------------|
-| Frontend | React, Vite, Tailwind CSS, Zustand    |
+| Frontend | React, Vite, Zustand, React Router    |
 | Backend  | Node.js, Express, MongoDB, Mongoose   |
 | Auth     | JWT, bcrypt                           |
-| AI       | Groq (planned)                        |
+| AI       | Groq SDK (LLaMA 3), Nomic Embeddings  |
 
 ## Project Structure
 
@@ -27,10 +27,13 @@ AI-powered test case generator. Upload a repository, let AI analyze the architec
 │
 ├── server/                 # Express backend
 │   ├── src/
+│   │   ├── ai/             # Groq client, prompt builder, context retriever
 │   │   ├── config/         # Database connection
 │   │   ├── controllers/    # Request handlers
-│   │   ├── middlewares/    # Auth, error handling
+│   │   ├── embeddings/     # Embedding generation & similarity search
+│   │   ├── middlewares/    # Auth, error handling, file upload
 │   │   ├── models/         # Mongoose schemas
+│   │   ├── parsing/        # File scanner, tech/route/model detectors
 │   │   ├── routes/         # API route definitions
 │   │   ├── services/       # Business logic
 │   │   ├── utils/          # Logger, helpers
@@ -79,7 +82,7 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 | `MONGODB_URI`  | MongoDB connection URI  |
 | `JWT_SECRET`   | JWT signing key         |
 | `CLIENT_URL`   | Frontend URL            |
-| `GROQ_API_KEY` | Groq API key (Phase 4)  |
+| `GROQ_API_KEY` | Groq API key            |
 
 ## API Endpoints
 
@@ -119,6 +122,21 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 | PATCH  | `/api/generate/:id/content` | Yes | Inline edit generated content |
 | GET    | `/api/generate/project/:projectId` | Yes | List project generations |
 
+### Chat
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST   | `/api/chat` | Yes | Send message to AI assistant |
+| GET    | `/api/chat/:projectId` | Yes | Get chat history |
+
+### Export
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET    | `/api/export/:projectId/markdown` | Yes | Download as Markdown |
+| GET    | `/api/export/:projectId/json` | Yes | Download as JSON |
+| GET    | `/api/export/:projectId/text` | Yes | Download as plain text |
+
 ## Features
 
 - **Secure Authentication**: JWT-based signup and login flows with hashed passwords.
@@ -128,6 +146,9 @@ The frontend runs on `http://localhost:5173` and proxies API requests to port 50
 - **Context-Aware AI Generation**: Leverages the Groq API to generate tailored test cases (unit, integration, e2e) based on your repository's specific stack and structure.
 - **Interactive Test Workspace**: View syntax-highlighted test code, edit outputs inline, and request targeted AI regenerations.
 - **Feedback Loop**: Provide approvals or rejections to generations to build context for future prompts.
+- **Embedding Memory**: Each generation is auto-embedded; future prompts retrieve similar past outputs via cosine similarity for improved AI quality.
+- **AI Chat Assistant**: Ask questions about your project, tests, or code with full repository and generation context.
+- **Multi-Format Export**: Download generated tests as Markdown, JSON, or plain text, or copy everything to clipboard.
 - **Premium Monochrome UI**: A meticulously crafted, distraction-free grayscale interface with automatic system dark-mode detection.
 
 ## License

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { HiOutlinePlus } from 'react-icons/hi2';
 import useProjectStore from '../store/projectStore';
 import ProjectCard from '../components/dashboard/ProjectCard';
+import EmptyState from '../components/dashboard/EmptyState';
+import StatsGrid from '../components/dashboard/StatsGrid';
 import Modal from '../components/common/Modal';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
@@ -73,6 +75,11 @@ const DashboardPage = () => {
         </Button>
       </div>
 
+      {/* Stats Grid */}
+      {!isLoading && projects.length > 0 && (
+        <StatsGrid projects={projects} />
+      )}
+
       {/* Loading */}
       {isLoading && projects.length === 0 && (
         <div style={{
@@ -95,23 +102,7 @@ const DashboardPage = () => {
 
       {/* Empty State */}
       {!isLoading && projects.length === 0 && (
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          padding: '4rem 2rem',
-          border: '1px dashed var(--color-border)',
-          borderRadius: 'var(--radius-lg)',
-        }}>
-          <p style={{ fontSize: '0.9rem', fontWeight: 500, marginBottom: '0.25rem' }}>
-            No projects yet
-          </p>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.84rem', marginBottom: '1rem' }}>
-            Create your first project to start generating test cases.
-          </p>
-          <Button onClick={() => setShowModal(true)}>
-            <HiOutlinePlus size={16} />
-            New project
-          </Button>
-        </div>
+        <EmptyState onAction={() => setShowModal(true)} />
       )}
 
       {/* Project Grid */}

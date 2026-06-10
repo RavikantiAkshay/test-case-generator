@@ -21,6 +21,8 @@ import RouteList from '../components/repo/RouteList';
 import ModelList from '../components/repo/ModelList';
 import GenerationForm from '../components/project/GenerationForm';
 import TestCard from '../components/project/TestCard';
+import ChatPanel from '../components/project/ChatPanel';
+import ExportBar from '../components/project/ExportBar';
 import useGenerateStore from '../store/generateStore';
 import toast from 'react-hot-toast';
 
@@ -30,6 +32,7 @@ const TABS = [
   { key: 'models', label: 'Models' },
   { key: 'structure', label: 'Structure' },
   { key: 'generation', label: 'AI Generation' },
+  { key: 'chat', label: 'Chat' },
 ];
 
 const ProjectPage = () => {
@@ -312,33 +315,39 @@ const ProjectPage = () => {
             {activeTab === 'models' && <ModelList models={models} />}
             {activeTab === 'structure' && <FolderTree treeString={summary.folderStructure} />}
             {activeTab === 'generation' && (
-              <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '1.5rem', alignItems: 'start' }}>
-                <div style={{ position: 'sticky', top: '20px' }}>
-                  <GenerationForm
-                    projectId={id}
-                    isGenerating={isGenerating}
-                    onGenerate={generateTest}
-                  />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {generations.length === 0 ? (
-                    <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)', border: '1px dashed var(--color-border)', borderRadius: 'var(--radius-md)' }}>
-                      No tests generated yet. Use the form to generate your first test suite.
-                    </div>
-                  ) : (
-                    generations.map((gen) => (
-                      <TestCard
-                        key={gen._id}
-                        generation={gen}
-                        onRegenerate={regenerateTest}
-                        onUpdateFeedback={updateFeedback}
-                        onUpdateContent={updateContent}
-                        isRegenerating={isGenerating}
-                      />
-                    ))
-                  )}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '350px 1fr', gap: '1.5rem', alignItems: 'start' }}>
+                  <div style={{ position: 'sticky', top: '20px' }}>
+                    <GenerationForm
+                      projectId={id}
+                      isGenerating={isGenerating}
+                      onGenerate={generateTest}
+                    />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <ExportBar projectId={id} generations={generations} />
+                    {generations.length === 0 ? (
+                      <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)', border: '1px dashed var(--color-border)', borderRadius: 'var(--radius-md)' }}>
+                        No tests generated yet. Use the form to generate your first test suite.
+                      </div>
+                    ) : (
+                      generations.map((gen) => (
+                        <TestCard
+                          key={gen._id}
+                          generation={gen}
+                          onRegenerate={regenerateTest}
+                          onUpdateFeedback={updateFeedback}
+                          onUpdateContent={updateContent}
+                          isRegenerating={isGenerating}
+                        />
+                      ))
+                    )}
+                  </div>
                 </div>
               </div>
+            )}
+            {activeTab === 'chat' && (
+              <ChatPanel projectId={id} />
             )}
           </div>
         </>

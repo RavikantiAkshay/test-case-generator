@@ -3,6 +3,8 @@ const projectService = require('./projectService');
 const { chatCompletion } = require('../ai/groqClient');
 const { buildTestGenerationPrompt } = require('../ai/promptBuilder');
 const { getRelevantContext } = require('../ai/contextRetriever');
+const { generateEmbedding, buildEmbeddingText } = require('../embeddings/embeddingService');
+const logger = require('../utils/logger');
 
 /**
  * Generate test cases based on input parameters
@@ -56,6 +58,14 @@ const generateTest = async ({ projectId, userId, goal, sourceCode, testTypes, ad
     $inc: { generationCount: 1 },
     lastGeneratedAt: new Date(),
   });
+
+  // Generate embedding asynchronously (non-blocking)
+  generateEmbedding(buildEmbeddingText(generation))
+    .then((embedding) => {
+      Generation.findByIdAndUpdate(generation._id, { embedding }).exec();
+      logger.info(`Embedding stored for generation ${generation._id}`);
+    })
+    .catch((err) => logger.warn(`Embedding generation skipped: ${err.message}`));
 
   return generation;
 };

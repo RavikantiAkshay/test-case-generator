@@ -47,6 +47,11 @@ const generationSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    embedding: {
+      type: [Number],
+      default: [],
+      select: false, // Don't return embeddings by default (they're large)
+    },
   },
   {
     timestamps: true,
