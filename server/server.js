@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./src/config/db');
 const errorHandler = require('./src/middlewares/errorHandler');
 const logger = require('./src/utils/logger');
@@ -14,6 +16,10 @@ const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// --- Security Middleware ---
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(mongoSanitize());
 
 // --- Middleware ---
 app.use(cors({

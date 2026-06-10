@@ -199,12 +199,12 @@
 - [x] Integrate export bar into project workspace
 
 ### 6C · Final Polish
-- [ ] Review all pages for responsive design (mobile, tablet, desktop breakpoints)
-- [ ] Verify dark-mode toggle works globally with no visual artifacts
-- [ ] Add smooth page transitions and micro-animations (hover effects, loading transitions)
-- [ ] Add error toast notifications for failed API calls
-- [ ] Add SEO meta tags to all pages (title, description, OG tags)
-- [ ] Security audit: sanitize inputs, validate payloads, check JWT expiry handling
+- [x] Review all pages for responsive design (mobile, tablet, desktop breakpoints)
+- [x] Verify dark-mode toggle works globally with no visual artifacts
+- [x] Add smooth page transitions and micro-animations (hover effects, loading transitions)
+- [x] Add error toast notifications for failed API calls
+- [x] Add SEO meta tags to all pages (title, description, OG tags)
+- [x] Security audit: sanitize inputs, validate payloads, check JWT expiry handling
 
 ### 6D · Phase 6 Verification
 - [x] ✅ Chat assistant answers "explain this test" with project context
