@@ -67,15 +67,39 @@ const cloneGithubRepo = async (repoUrl, projectId) => {
   }
 
   try {
-    // Sanitize URL — only allow github.com HTTPS URLs
-    const urlPattern = /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+(\.git)?$/;
-    if (!urlPattern.test(repoUrl)) {
-      throw new Error('Invalid GitHub repository URL');
+    let cleanUrl = repoUrl.trim();
+    if (!cleanUrl.startsWith('http://') && !cleanUrl.startsWith('https://')) {
+      cleanUrl = 'https://' + cleanUrl;
     }
 
-    const cleanUrl = repoUrl.endsWith('.git') ? repoUrl : `${repoUrl}.git`;
+    let parsedUrl;
+    try {
+      parsedUrl = new URL(cleanUrl);
+    } catch (e) {
+      throw new Error('Invalid URL format');
+    }
 
-    execSync(`git clone --depth 1 ${cleanUrl} "${destDir}"`, {
+    if (parsedUrl.hostname !== 'github.com' && !parsedUrl.hostname.endsWith('.github.com')) {
+      throw new Error('Only GitHub repositories are supported');
+    }
+
+    const pathParts = parsedUrl.pathname.split('/').filter(Boolean);
+    if (pathParts.length < 2) {
+      throw new Error('Invalid GitHub repository URL. Must include owner and repository name.');
+    }
+
+    const owner = pathParts[0];
+    const repo = pathParts[1].replace(/\.git$/, '');
+
+    // Check for token in env variables
+    const token = process.env.GITHUB_TOKEN || process.env.GIT_TOKEN;
+    let cloneUrl = `https://github.com/${owner}/${repo}.git`;
+    if (token) {
+      // Use token authentication for clone
+      cloneUrl = `https://x-access-token:${token}@github.com/${owner}/${repo}.git`;
+    }
+
+    execSync(`git clone --depth 1 "${cloneUrl}" "${destDir}"`, {
       timeout: 60000, // 60s timeout
       stdio: 'pipe',
     });

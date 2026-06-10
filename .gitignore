@@ -30,3 +30,8 @@ temp/
 
 # Coverage
 coverage/
+
+# Markdown files to ignore (only keep README.md files tracked)
+*.md
+!README.md
+!**/README.md
